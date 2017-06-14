@@ -13,28 +13,25 @@ import java.util.List;
 
 public class MyService extends IntentService {
 
-	private int remainingCalls = 0;
-
 	public MyService() {
 
 		super("myService");
 	}
 
 	public MyService(String name) {
+
 		super(name);
 	}
 
 	@Override
 	protected void onHandleIntent(@Nullable Intent intent) {
+
 		KillerMethods killerMethods = new KillerMethods();
 		killerMethods.killerMethod(new OnKillerMethodFinish() {
 			@Override
 			public void onFinish(List<CustomPhoto> photoList) {
-				++remainingCalls;
-				if(remainingCalls == 5) {
-					remainingCalls = 0;
-					Log.i("JOTO", "JobFinishedService");
-				}
+
+				Log.i("JOTO", "JobFinishedService");
 			}
 		});
 	}

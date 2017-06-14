@@ -8,27 +8,16 @@ import java.util.List;
 
 public class MyJobService extends JobService {
 
-	JobParameters jobParameters;
-	int remainingCalls = 0;
-
-	OnKillerMethodFinish onKillerMethodFinish = new OnKillerMethodFinish() {
-		@Override
-		public void onFinish(List<CustomPhoto> photoList) {
-
-			++remainingCalls;
-			if(remainingCalls == 5) {
+	@Override
+	public boolean onStartJob(final JobParameters jobParameters) {
+		KillerMethods killerMethods = new KillerMethods();
+		killerMethods.killerMethod(new OnKillerMethodFinish() {
+			@Override
+			public void onFinish(List<CustomPhoto> photoList) {
 				Log.i("JOTO", "JobFinishedScheduler");
-				remainingCalls = 0;
 				jobFinished(jobParameters, false);
 			}
-		}
-	};
-
-	@Override
-	public boolean onStartJob(JobParameters jobParameters) {
-		this.jobParameters = jobParameters;
-		KillerMethods killerMethods = new KillerMethods();
-		killerMethods.killerMethod(onKillerMethodFinish);
+		});
 
 		return false;
 	}

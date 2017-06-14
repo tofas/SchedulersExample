@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
 		buttonJobScheduler.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-
 				ComponentName componentName = new ComponentName(getApplicationContext(), MyJobService.class);
 				JobInfo jobInfo = new JobInfo.Builder(1, componentName)
 						.setRequiresCharging(true)

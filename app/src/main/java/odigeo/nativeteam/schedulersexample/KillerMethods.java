@@ -24,13 +24,7 @@ public class KillerMethods {
 		imagesService = retrofit.create(ImagesService.class);
 	}
 
-	public void killerMethod(OnKillerMethodFinish onKillerMethodFinish) {
-		for(int i = 0; i < 5; ++i) {
-			getPosts(onKillerMethodFinish);
-		}
-	}
-
-	public void getPosts(final OnKillerMethodFinish onKillerMethodFinish) {
+	public void killerMethod(final OnKillerMethodFinish onKillerMethodFinish) {
 		imagesService.listPhotos().enqueue(new Callback<List<CustomPhoto>>() {
 			@Override
 			public void onResponse(Call<List<CustomPhoto>> call, Response<List<CustomPhoto>> response) {
@@ -43,4 +37,5 @@ public class KillerMethods {
 			}
 		});
 	}
+
 }
