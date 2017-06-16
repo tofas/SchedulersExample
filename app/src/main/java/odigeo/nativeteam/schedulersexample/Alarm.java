@@ -6,15 +6,17 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class Alarm extends BroadcastReceiver {
 
 	@Override
-	public void onReceive(Context context, Intent intent) {
+	public void onReceive(final Context context, Intent intent) {
 		PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
 		PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
 		wl.acquire();
@@ -24,6 +26,7 @@ public class Alarm extends BroadcastReceiver {
 			@Override
 			public void onFinish(List<CustomPhoto> photoList) {
 				Log.i("JOTO", "JobFinishedAlarm");
+				sendBroadcast(context, photoList);
 			}
 		});
 
@@ -44,5 +47,12 @@ public class Alarm extends BroadcastReceiver {
 		PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, 0);
 		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		alarmManager.cancel(sender);
+	}
+
+	private void sendBroadcast (Context context, List<CustomPhoto> photoList){
+		Intent intent = new Intent ("list"); //put the same message as in the filter you used in the activity when
+		// registering the receiver
+		intent.putParcelableArrayListExtra("photos", new ArrayList<>(photoList));
+		LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 	}
 }
