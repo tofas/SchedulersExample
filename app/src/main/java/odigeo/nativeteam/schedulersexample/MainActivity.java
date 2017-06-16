@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
 		buttonAlarmManager.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-
+				Alarm alarm = new Alarm();
+				alarm.setAlarm(getApplicationContext());
 
 			}
 		});
